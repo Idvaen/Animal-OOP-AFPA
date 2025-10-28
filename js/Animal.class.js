@@ -4,6 +4,7 @@ export class Animal {
   #nom = "";
   #espece = "";
   #vol = false;
+  static #idAnimal = 0;
 
   /**
    * Constructeur pour la class Animal
@@ -11,20 +12,21 @@ export class Animal {
    * @param {string} espece
    * @param {boolean} vol
    */
-  constructor(nom, espece, vol) {
-    this.setNom(nom);
-    this.setEspece(espece);
-    this.setVol(vol);
+  constructor(nom, espece, vol=false) {
+    this.#setNom(nom);
+    this.#setEspece(espece);
+    this.#setVol(vol);
+    Animal.#idAnimal++;
   }
 
   //Getters et Setters
-  setNom(nom) {
+  #setNom(nom) {
     if (/[0-9]/.test(nom))
-      throw new Error(`ERR: ${nom} ne doit pas include les chiffres`);
+      throw new Error(`ERR: Nom  ${nom} ne doit pas include les chiffres`);
     if (!/[a-z]/i.test(nom))
-      throw new Error(`ERR: ${nom} doit include les lettres`);
+      throw new Error(`ERR: Nom  ${nom} doit include les lettres`);
     if (nom.lenght < 3)
-      throw new Error(`ERR: ${nom} doit include au moins 3 lettres`);
+      throw new Error(`ERR: Nom  ${nom} doit include au moins 3 lettres`);
     if (
       !/.*[\¬\!\"\£\$\%\^\&\*\(\)\_\+\`\-\=\{\}\:\@\~\<\>\?\[\]\;\'\#\,\.\/\\\|]/i.test(
         nom
@@ -33,13 +35,13 @@ export class Animal {
       this.#nom = nom;
   }
 
-  setEspece(espece) {
+  #setEspece(espece) {
     if (/[0-9]/.test(espece))
-      throw new Error(`ERR: ${espece} ne doit pas include les chiffres`);
+      throw new Error(`ERR: Espece ${espece} ne doit pas include les chiffres`);
     if (!/[a-z]/i.test(espece))
-      throw new Error(`ERR: ${espece} doit include les lettres`);
+      throw new Error(`ERR: Espece ${espece} doit include les lettres`);
     if (espece.lenght < 2)
-      throw new Error(`ERR: ${espece} doit include au moins 3 lettres`);
+      throw new Error(`ERR: Espece ${espece} doit include au moins 3 lettres`);
     if (
       !/.*[\¬\!\"\£\$\%\^\&\*\(\)\_\+\`\-\=\{\}\:\@\~\<\>\?\[\]\;\'\#\,\.\/\\\|]/i.test(
         espece
@@ -48,7 +50,7 @@ export class Animal {
       this.#espece = espece;
   }
 
-  setVol(vol) {
+  #setVol(vol) {
     this.#vol = vol;
   }
 
@@ -61,14 +63,17 @@ export class Animal {
   }
 
   getVol() {
-    return this.#vol;
+    if (this.#vol) return 'est vole';
+    else return "n'est pas vole";
+  }
+
+  getIdAnimal() {
+    return Animal.#idAnimal;
   }
 
   //Comportement
 
   affichage() {
-    if (this.getVol())
-      return `Un(une) animal ${this.getNom()} est ${this.getEspece()} et Il(elle) est vole.`;
-    return `Un(une) animal ${this.getNom()} est ${this.getEspece()} et Il(elle) n'est pas vole.`;
+    return `#${this.getIdAnimal()} Un(une) animal ${this.getNom()} est ${this.getEspece()} et Il(elle) ${this.getVol()}.`;
   }
 }

@@ -17,12 +17,12 @@
     <main class="container mx-auto">
       <h1>Animal OOP</h1>
 
-      <label for="nom">Nom d'animal</label>
+      <label for="nom">Nom d'animal*</label>
       <input type="text" name="nom" id="nom" />
 
       <hr />
 
-      <label for="espece">L`espèce</label>
+      <label for="espece">L`espèce*</label>
       <input type="text" name="espece" id="espece" />
 
       <hr />
@@ -33,7 +33,9 @@
       <br />
       <br />
 
-      <button id="btn">Ajouter</button>
+      <button id="btn-ajouter">Ajouter</button>
+      <button id="btn-suprimer">Suprimer</button>
+      <input type="number" name="id" id="id" style="width: 50px;">
 
       <br />
       <br />
@@ -45,6 +47,12 @@
       <br />
 
       <div id="bonne-message"></div>
+
+      <br />
+      <br />
+      <br />
+
+      <div id="message-suprimer"></div>
     </main>
 
     <script

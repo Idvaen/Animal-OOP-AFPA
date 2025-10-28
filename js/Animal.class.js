@@ -54,6 +54,10 @@ export class Animal {
     this.#vol = vol;
   }
 
+  setIdAnimal(idAnimal){
+    Animal.#idAnimal = idAnimal;
+  }
+
   getNom() {
     return this.#nom;
   }

@@ -16,6 +16,11 @@ let vol = document.getElementById("vol");
 let id_animal = document.getElementById("id");
 const local = localStorage;
 
+if (Object.keys(localStorage).length > 1) {
+  let dernier = Object.keys(localStorage).map(a => parseInt(a)).sort(compareNumbers)[Object.keys(localStorage).length - 1]
+  console.log(dernier);
+}
+
 for (let i = 0; i < local.length; i++) {
   console.log(local.getItem(local.key(i)));
   bonneMessage.innerHTML += `<div class="bg-success">${local.getItem(
@@ -29,16 +34,13 @@ function ajouterAnimal() {
     console.log(animal);
 
     //Local storage pour sauvgarder les donnes
+    if (Object.keys(localStorage).length > 1) {
+      animal.setIdAnimal(Object.keys(localStorage).map(a => parseInt(a)).sort(compareNumbers)[Object.keys(localStorage).length - 1]+1);
+    }
     local.setItem(
       animal.getIdAnimal(),
       `#${animal.getIdAnimal()} ${animal.getEspece()} "${animal.getNom()}" - ${animal.getVol()}.`
     );
-    // console.log(
-    //   animal.getIdAnimal(),
-    //   animal.getNom(),
-    //   animal.getEspece(),
-    //   animal.getVol()
-    // );
 
     bonneMessage.innerHTML += `<div class="bg-success">${animal.affichage(
       animal
@@ -54,6 +56,7 @@ function supprimerAnimal() {
   try {
     let volString = vol.checked ? "est vole" : "n'est pas vole";
     let count = local.length;
+    
     for (let i = 0; i < local.length; i++) {
       count--;
       if (
@@ -68,7 +71,7 @@ function supprimerAnimal() {
         count = local.length;
         window.location.reload();
       }
-      if (id_animal.value == i + 1) {
+      if (id_animal.value == local.getItem(local.key(i))[1]) {
         console.log(local.getItem(local.key(i)) + " Est suprimer");
         local.removeItem(local.key(i));
         count = local.length;
@@ -83,3 +86,8 @@ function supprimerAnimal() {
   //   local.key();
 }
 // local.clear();
+
+
+function compareNumbers(a, b) {
+  return a - b;
+}
